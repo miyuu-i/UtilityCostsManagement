@@ -1,0 +1,41 @@
+{% extends "utilitycosts/base.html" %}
+{% load humanize %}
+
+{% block content %}
+<a href="{% url 'electricity_add' %}" class="btn btn-outline-secondary btn-sm my-3">追加</a>
+  <!-- 電気代 -->
+    <nav class="navbar navbar-light bg-light">
+      <a class="navbar-brand">電気代詳細</a>
+    </nav>
+
+    <img src="{% url 'electricity_bargraph' %}" width=600 height=600></br> 
+
+    <table class="table">
+      <thead>
+        <tr class="table-warning">
+          <th>#</th>
+          <th class="text-center">支払日</th>
+          <th class="text-center">料金</th>
+          <th class="text-center">使用期間</th>
+          <th class="text-center">修正/削除</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for electricity in electricities %}
+        <tr>
+          <th scope="row">{{ electricity.target_year }}年 {{ electricity.target_month }}月分</th>
+          <td class="text-center">{{ electricity.payment_date|date:"Y/n/j" }}</td>
+          <td class="text-center">¥ {{ electricity.cost| intcomma }}</td>
+          <td class="text-center">{{ electricity.date_to|date:"Y/n/j" }} ~ {{ electricity.date_from|date:"Y/n/j" }}</td>
+          <td class="text-center">
+            <a href="{% url 'electricity_mod' electricity_id=electricity.id %}" class="btn btn-outline-info btn-sm my-3">修正</a>
+            <a href="{% url 'electricity_del' electricity_id=electricity.id %}" class="btn btn-outline-danger btn-sm my-3">削除</a>
+        </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+  <a href="{% url 'list' %}" class="btn btn-outline-primary btn-sm my-3">一覧に戻る</a>
+
+{% endblock content %}

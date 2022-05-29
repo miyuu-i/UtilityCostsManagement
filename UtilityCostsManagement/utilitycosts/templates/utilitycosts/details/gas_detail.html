@@ -1,0 +1,39 @@
+{% extends "utilitycosts/base.html" %}
+{% load humanize %}
+
+{% block content %}
+<a href="{% url 'gas_add' %}" class="btn btn-outline-secondary btn-sm my-3">追加</a>
+  <!-- ガス代 -->
+    <nav class="navbar navbar-light bg-light">
+      <a class="navbar-brand">ガス代詳細</a>
+    </nav>
+    <img src="{% url 'gas_bargraph' %}" width=600 height=600></br> 
+    
+    <table class="table">
+      <thead>
+        <tr class="table-danger">
+          <th>#</th>
+          <th class="text-center">支払日</th>
+          <th class="text-center">料金</th>
+          <th class="text-center">使用期間</th>
+          <th class="text-center">修正/削除</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for gas in gases %}
+        <tr>
+          <th scope="row">{{ gas.target_year }}年 {{ gas.target_month }}月分</th>
+          <td class="text-center">{{ gas.payment_date|date:"Y/n/j" }}</td>
+          <td class="text-center">¥ {{ gas.cost| intcomma }}</td>
+          <td class="text-center">{{ gas.date_to|date:"Y/n/j" }} ~ {{ gas.date_from|date:"Y/n/j" }}</td>
+          <td class="text-center">
+            <a href="{% url 'gas_mod' gas_id=gas.id %}" class="btn btn-outline-info btn-sm my-3">修正</a>
+            <a href="{% url 'gas_del' gas_id=gas.id %}" class="btn btn-outline-danger btn-sm my-3">削除</a>
+        </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  <a href="{% url 'list' %}" class="btn btn-outline-primary btn-sm my-3">一覧に戻る</a>
+
+{% endblock content %}

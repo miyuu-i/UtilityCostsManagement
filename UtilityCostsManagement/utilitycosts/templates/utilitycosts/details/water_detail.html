@@ -1,0 +1,40 @@
+{% extends "utilitycosts/base.html" %}
+{% load humanize %}
+
+{% block content %}
+<a href="{% url 'water_add' %}" class="btn btn-outline-secondary btn-sm my-3">追加</a>
+  <!-- 水道代 -->
+    <nav class="navbar navbar-light bg-light">
+      <a class="navbar-brand">水道代詳細</a>
+    </nav>
+  <img src="{% url 'water_bargraph' %}" width=600 height=600></br>
+
+  <!---<img src="{% url 'water_linegraph' %}" width=600 height=600></br>-->
+  <table class="table">
+    <thead>
+      <tr class="table-primary">
+        <th>#</th>
+        <th class="text-center">支払日</th>
+        <th class="text-center">料金</th>
+        <th class="text-center">使用期間</th>
+        <th class="text-center">修正/削除</th>
+      </tr>
+    </thead>
+      <tbody>
+        {% for water in waters %}
+        <tr>
+          <th scope="row">{{ water.target_year }}年 {{ water.target_month }}月分</th>
+          <td class="text-center">{{ water.payment_date|date:"Y/n/j" }}</td>
+          <td class="text-center">¥ {{ water.cost| intcomma }}</td>
+          <td class="text-center">{{ water.date_to|date:"Y/n/j" }} ~ {{ water.date_from|date:"Y/n/j" }}</td>
+          <td class="text-center">
+              <a href="{% url 'water_mod' water_id=water.id %}" class="btn btn-outline-info btn-sm my-3">修正</a>
+              <a href="{% url 'water_del' water_id=water.id %}" class="btn btn-outline-danger btn-sm my-3">削除</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  <a href="{% url 'list' %}" class="btn btn-outline-primary btn-sm my-3">一覧に戻る</a>
+
+{% endblock content %}

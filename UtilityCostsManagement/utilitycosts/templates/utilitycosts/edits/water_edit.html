@@ -1,0 +1,20 @@
+{% extends "utilitycosts/base.html" %}
+{% load bootstrap4 %}
+
+{% block content %}
+<p>水道代 / <a href="{% url 'gas_add' %}">ガス代</a> / <a href="{% url 'electricity_add' %}">電気代</a></p>
+{% if water_id %}
+  <form action="{% url 'water_mod' water_id=water_id %}" method="post">
+{% else %}
+<h2>水道代</h2>
+  <form action="{% url 'water_add' %}" method="post">
+{% endif %}
+  {% csrf_token %}
+  {% bootstrap_form form layout='horizontal' %}
+  <div class = "offset-md-3 col-md-9">
+    <button type="submit" class="btn btn-outline-secondary">送信</button>
+  </div>
+  </form>
+  <a href="{% url 'list' %}" class="btn btn-secondary btn-sm">戻る</a>
+
+{% endblock content %}

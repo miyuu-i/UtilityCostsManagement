@@ -1,0 +1,33 @@
+{% load i18n static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>{% block title %}光熱費管理{% endblock %}</title>
+        <style>body {padding: 10px;}</style>
+        {% block extra_css %}{% endblock %}
+        <link rel="stylesheet" href="{% static 'utilitycosts/css/bootstrap.css' %}">
+    </head>
+
+    <body>
+      <header>
+        <!-- <nav class="navbar fixed-top navbar-dark bg-dark"> -->
+        <nav class="navbar fixed-top navbar-dark" style="background-color: #c0c0c0">
+          <a class="navbar-brand text-secondary"" href="{% url 'index' %}">光熱費管理</a>
+        </nav>
+      </header>
+      <div class="d-flex justify-content-center">
+      <div class="w-75 p-3">
+      <!-- style="background-color: #eee;" -->
+        {% block content %}
+          {{ content }}
+        {% endblock %}
+      </div>
+      </div>
+
+        {% block extra_js %}{% endblock %}
+
+        <script src="{% static 'utilitycosts/js/bootstrap.js' %}"></script>
+    </body>
+</html>
